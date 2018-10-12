@@ -14,6 +14,16 @@ const categories = [
   { name: 'entertainment:music', value: '12' },
   { name: 'entertainment:musicals & theatre', value: '13' },
 ];
+//TODO: convert to reduce
+const shuffle = a => {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+console.log(shuffle([1, 2, 3, 4]));
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +33,6 @@ class App extends Component {
       categories,
       currentCategory: 'any',
       answers: [],
-      correctAnswer: '',
       chosenAnswer: null,
       score: 0,
     };
@@ -39,25 +48,34 @@ class App extends Component {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        const question = data && data.results[0] && data.results[0].question;
-        const correctAnswer =
-          data && data.results[0] && data.results[0].correct_answer;
-        const incorrectAnswers =
-          data && data.results[0] && data.results[0].incorrect_answers;
+        const {
+          question,
+          correct_answer: correctAnswer,
+          incorrect_answers: incorrectAnswers,
+          type,
+        } = data.results[0];
         // TODO: scramble this
         // TODO: change the data structure to an object with props answer, correct (boolean)
-        const answers = [correctAnswer, ...incorrectAnswers];
+        const answers = [
+          {
+            answer: correctAnswer,
+            correct: true,
+          },
+          ...incorrectAnswers.map(incorrectAnswer => ({
+            answer: incorrectAnswer,
+            correct: false,
+          })),
+        ];
         this.setState({
           question,
-          correctAnswer,
-          answers,
+          answers: type === 'multiple' ? shuffle(answers) : answers,
         });
       });
   };
 
   onSelectAnswer = e => {
     this.setState({
-      chosenAnswer: e.target.value,
+      chosenAnswer: JSON.parse(e.target.value),
     });
   };
 
@@ -66,7 +84,7 @@ class App extends Component {
       alert('please select a question');
     } else if (this.state.chosenAnswer !== null) {
       const submittedAnswer = this.state.chosenAnswer;
-      if (submittedAnswer === this.state.correctAnswer) {
+      if (submittedAnswer.correct) {
         this.setState({ score: this.state.score + 1 });
       } else {
         this.setState({ score: this.state.score - 1 });
@@ -94,11 +112,13 @@ class App extends Component {
           <Category getQuestion={this.getQuestion} />
         )}
         <Text>{this.state.question}</Text>
-        <Answers
-          onSelectAnswer={this.onSelectAnswer}
-          answers={this.state.answers}
-          submitAnswer={this.submitAnswer}
-        />
+        {this.state.question ? (
+          <Answers
+            onSelectAnswer={this.onSelectAnswer}
+            answers={this.state.answers}
+            submitAnswer={this.submitAnswer}
+          />
+        ) : null}
         <Score>
           <h4>Score:</h4>
           {this.state.score}
