@@ -2,7 +2,6 @@ import React from 'react';
 import { Dropdown } from '../components/dropdown';
 import { Button } from '../components/button';
 
-// TODO: fill in more categories
 const categories = [
   { name: 'any', value: 'any' },
   { name: 'general knowledge', value: '9' },

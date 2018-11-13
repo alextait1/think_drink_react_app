@@ -6,6 +6,7 @@ import { Category } from './containers/choose-category';
 import { Answers } from './components/answers';
 import { Score } from './components/score';
 import { shuffle } from './utils';
+import { getTranslationContext } from './contexts/translations';
 
 const categories = [
   { name: 'any', value: 'any' },
@@ -98,7 +99,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header>Think Drink!</Header>
+        <Header>{this.context.appTitle}</Header>
         {this.state.question ? null : (
           <Category getQuestion={this.getQuestion} />
         )}
@@ -118,6 +119,7 @@ class App extends Component {
     );
   }
 }
+App.contextType = getTranslationContext('fr');
 
 export default App;
 
