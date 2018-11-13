@@ -2,14 +2,32 @@ import React from 'react';
 import { Dropdown } from '../components/dropdown';
 import { Button } from '../components/button';
 
-// TODO: fill in more categories
 const categories = [
   { name: 'any', value: 'any' },
   { name: 'general knowledge', value: '9' },
-  { name: 'entertainment:books', value: '10' },
-  { name: 'entertainment:film', value: '11' },
-  { name: 'entertainment:music', value: '12' },
-  { name: 'entertainment:musicals & theatre', value: '13' },
+  { name: 'books', value: '10' },
+  { name: 'film', value: '11' },
+  { name: 'music', value: '12' },
+  { name: 'art', value: '25' },
+  { name: 'musicals & theatre', value: '13' },
+  { name: 'television', value: '14' },
+  { name: 'video games', value: '15' },
+  { name: 'board games', value: '16' },
+  { name: 'cartoon animations', value: '32' },
+  { name: 'Japanese animi & manga', value: '31' },
+  { name: 'comics', value: '29' },
+  { name: 'science & nature', value: '17' },
+  { name: 'computers', value: '18' },
+  { name: 'mathematics', value: '19' },
+  { name: 'gadgets', value: '30' },
+  { name: 'mythology', value: '20' },
+  { name: 'sports', value: '21' },
+  { name: 'vehicles', value: '28' },
+  { name: 'geography', value: '22' },
+  { name: 'history', value: '23' },
+  { name: 'politics', value: '24' },
+  { name: 'celebrities', value: '26' },
+  { name: 'animals', value: '27' },
 ];
 
 export class Category extends React.Component {
@@ -20,12 +38,9 @@ export class Category extends React.Component {
       question: '',
       categories,
     };
-    //do I need to bind this? 👇🏼 (no you dont! block scoping!)
-    this.handleChooseCategory = this.handleChooseCategory.bind(this);
   }
 
   handleChooseCategory = e => {
-    //do I need to prevent default? (no you dont! default behaviour is fine here, might not be for submit a form)
     this.setState({ category: e.target.value });
   };
 

@@ -5,6 +5,8 @@ import { Text } from './components/text';
 import { Category } from './containers/choose-category';
 import { Answers } from './components/answers';
 import { Score } from './components/score';
+import { shuffle } from './utils';
+import { getTranslationContext } from './contexts/translations';
 
 const categories = [
   { name: 'any', value: 'any' },
@@ -54,6 +56,7 @@ class App extends Component {
           incorrect_answers: incorrectAnswers,
           type,
         } = data.results[0];
+        //TODO: pull this map function out of the array and then spread the results into it
         // TODO: scramble this
         // TODO: change the data structure to an object with props answer, correct (boolean)
         const answers = [
@@ -68,6 +71,8 @@ class App extends Component {
         ];
         this.setState({
           question,
+          answers:
+            type === 'multiple' ? shuffle(answers, Math.random()) : answers,
           answers: type === 'multiple' ? shuffle(answers) : answers,
         });
       });
@@ -107,7 +112,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header>Think Drink!</Header>
+        <Header>{this.context.appTitle}</Header>
         {this.state.question ? null : (
           <Category getQuestion={this.getQuestion} />
         )}
@@ -127,6 +132,7 @@ class App extends Component {
     );
   }
 }
+App.contextType = getTranslationContext('fr');
 
 export default App;
 
