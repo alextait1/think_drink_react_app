@@ -16,6 +16,16 @@ const categories = [
   { name: 'entertainment:music', value: '12' },
   { name: 'entertainment:musicals & theatre', value: '13' },
 ];
+//TODO: convert to reduce
+const shuffle = a => {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+console.log(shuffle([1, 2, 3, 4]));
 
 class App extends Component {
   constructor(props) {
@@ -47,6 +57,8 @@ class App extends Component {
           type,
         } = data.results[0];
         //TODO: pull this map function out of the array and then spread the results into it
+        // TODO: scramble this
+        // TODO: change the data structure to an object with props answer, correct (boolean)
         const answers = [
           {
             answer: correctAnswer,
@@ -61,6 +73,7 @@ class App extends Component {
           question,
           answers:
             type === 'multiple' ? shuffle(answers, Math.random()) : answers,
+          answers: type === 'multiple' ? shuffle(answers) : answers,
         });
       });
   };
