@@ -8,13 +8,33 @@ import { Score } from './components/score';
 import { shuffle } from './utils';
 import { getTranslationContext } from './contexts/translations';
 
+//TODO: add all categories back
 const categories = [
   { name: 'any', value: 'any' },
   { name: 'general knowledge', value: '9' },
-  { name: 'entertainment:books', value: '10' },
-  { name: 'entertainment:film', value: '11' },
-  { name: 'entertainment:music', value: '12' },
-  { name: 'entertainment:musicals & theatre', value: '13' },
+  { name: 'books', value: '10' },
+  { name: 'film', value: '11' },
+  { name: 'music', value: '12' },
+  { name: 'musicals & theatre', value: '13' },
+  { name: 'television', value: '14' },
+  { name: 'video games', value: '15' },
+  { name: 'board games', value: '16' },
+  { name: 'science & nature', value: '17' },
+  { name: 'computers', value: '18' },
+  { name: 'mathematics', value: '19' },
+  { name: 'mythology', value: '20' },
+  { name: 'sports', value: '21' },
+  { name: 'geography', value: '22' },
+  { name: 'history', value: '23' },
+  { name: 'politics', value: '24' },
+  { name: 'art', value: '25' },
+  { name: 'celebrities', value: '26' },
+  { name: 'animals', value: '27' },
+  { name: 'vehicles', value: '28' },
+  { name: 'comics', value: '29' },
+  { name: 'gadgets', value: '30' },
+  { name: 'japanese anime & manga', value: '31' },
+  { name: 'cartoon & animations', value: '32' },
 ];
 //TODO: convert to reduce
 const shuffle = a => {
@@ -135,7 +155,3 @@ class App extends Component {
 App.contextType = getTranslationContext('fr');
 
 export default App;
-
-// displaying answers
-// choose choose an answer (save the answer, whether its correct or not)
-// go back to dropdown state

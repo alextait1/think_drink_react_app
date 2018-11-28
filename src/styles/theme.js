@@ -5,3 +5,5 @@ export const theme = {
   accent: 'rgba(224, 98, 14, 1)',
   accent2: 'rgba(224, 71, 158, 1)',
 };
+
+//TODO build out and develop theme
